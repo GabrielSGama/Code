@@ -171,6 +171,7 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 			}
 		}
 		clear_scren();
+		printf("Só umasdas\n");
 	}
 	*n = *n + add;
 }
