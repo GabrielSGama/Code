@@ -106,13 +106,7 @@ void add_n_numbers(int col, int lin, int *add, int flag){
 		}else{printf("Digite uma quantidade de elementos que esteja dentro dos limites da matriz\n");}
 	}
 }
-/*
-struct matriz{
-	int x;
-	int y;
-	int val;
-};
-*/
+
 void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 	int i;
 	int k;
