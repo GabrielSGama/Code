@@ -29,7 +29,7 @@ char choose(){
 	int y;
 	char x;
 
-	while(1){
+	do{
 		printf("Escolha a opção que deseja realizar:\n");
 		printf("Fechar programa              -> A\n");
 		printf("Criar a matriz m por n       -> B\n");
@@ -37,10 +37,7 @@ char choose(){
 		printf("Excluir a matriz m por n     -> D\n");
 		x = getchar();
 		y = clear();
-		if(y){
-			break;
-		}
-	}
+	}while(!y);
 	return x;
 }
 
@@ -80,6 +77,7 @@ void get_limits(int *col, int *lin, int *flag){
 
 void add_n_numbers(int col, int lin, int *add, int flag){
 	int y;
+	int check;
 
 	if(!flag){
 		//clear_scren();
@@ -87,81 +85,60 @@ void add_n_numbers(int col, int lin, int *add, int flag){
 		return;
 	}
 	clear_scren();
-	while(1){
-		while(1){
-			while(1){
-				printf("Digite números de elementos que deseja adicionar na matriz:\n");
-				scanf("%d", add);
-				y = clear();
-				if(y){
-					break;
-				}
-			}
-			if(*add > 0){
-				break;
-			}else{printf("Digite um número válido de elementos\n");}
-		}
-		if(*add <= col*lin /*&& quant <= freespace()*/){
-			break;
-		}else{printf("Digite uma quantidade de elementos que esteja dentro dos limites da matriz\n");}
+	check = 0;
+	while(!check){
+		printf("Digite o numero de elementos que deseja adicionar na matriz:\n");
+		scanf("%d", add);
+		y = clear();
+		if(!y)
+		else if(*add <= 0)printf("Digite um numero valido de elementos");
+		else if(*add > col*lin)printf("Digite uma quantidade de elementos que esteja dentro dos limites da matriz");
+		else check = 1;
 	}
 }
+
 
 void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 	int i;
 	int k;
-	int flag_posi;
 	int y;
+	int check;
+	int check_all;
 
 	for(i = 0; i<add; i++){
-		flag_posi = 1;
-		printf("Numeros restantes a serem adicionados: %d\n", add - i);
-		while(1){
-			printf("Digite o número que deseja adicionar:\n");
-			scanf("%d", &p[i].val);
-			y = clear();
-			if(y){
-				break;
+		y = 0;
+		check_all = 0;
+		while(!check_all){
+			printf("Numeros restantes a serem adicionados: %d\n", add - i);
+			while(!y){
+				printf("Digite o número que deseja adicionar:\n");
+				scanf("%d", &p[i].val);
+				y = clear();
 			}
-		}
-		while(1){
-			while(1){
-				while(1){
-					printf("Digite a linha em que deseja adicionar o número %d\n", p[i].val);
-					scanf("%d", &p[i].y);
-					y = clear();
-					if(y){
-						break;
-					}
-				}
-				if(p[i].y > 0 && p[i].y <= lin){
-					break;
-				}else{printf("Digite um número válido\n");}
+			y = 0;	check = 0;
+			while(!check){
+				printf("Digite a linha em que deseja adicionar o número %d\n", p[i].val);
+				scanf("%d", &p[i].y);
+				y = clear();
+				if(!y)
+				else if(p[i].y <= 0 || p[i].y] > lin)printf("Digite um numero valido");
+				else check = 1;
 			}
-			while(1){
-				while(1){
-					printf("Digite a coluna em que deseja adicionar o número %d\n", p[i].val);
-					scanf("%d", &p[i].x);
-					y = clear();
-					if(y){
-						break;
-					}
-				}
-				if(p[i].x > 0 && p[i].x <= col){
-					break;
-				}else{printf("Digite um numero valido\n");}
+			y = 0;	check = 0;
+			while(!check){
+				printf("Digite a coluna em que deseja adicionar o número %d\n", p[i].val);
+				scanf("%d", &p[i].x);
+				y = clear();
+				if(!y)
+				else if(p[i].x <= 0 || p[i].x] > lin)printf("Digite um numero valido");
+				else check = 1;
 			}
-			for(k = 0; k < (*n + i); k++){
-				if(p[i].x == p[k].x && p[i].y == p[k].y && i != k){
-					flag_posi = 0;
+			check_all = 1;
+			for(k = 0; k < *n + i; k++){
+				if(p[i].x == p[k].x && p[i].y == p[k].y && i!=k){
+					check_all = 0;
 					break;
 				}
-			}
-			if(flag_posi){
-				break;
-			}else{
-				printf("Espaco ja foi utilizado\n");
-				printf("Escolha outra posicao\n");
 			}
 		}
 		clear_scren();
