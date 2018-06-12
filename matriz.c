@@ -87,12 +87,12 @@ void add_n_numbers(int col, int lin, int *add, int flag){
 	clear_scren();
 	check = 0;
 	while(!check){
-		printf("Digite o numero de elementos que deseja adicionar na matriz:\n");
+		printf("Digite o numero de elementos que deseja adicionar ou modificar na matriz:\n");
 		scanf("%d", add);
 		y = clear();
-		if(!y)
-		else if(*add <= 0)printf("Digite um numero valido de elementos");
-		else if(*add > col*lin)printf("Digite uma quantidade de elementos que esteja dentro dos limites da matriz");
+		if(!y){
+		}else if(*add <= 0)printf("Digite um numero valido de elementos\n");
+		else if(*add > col*lin)printf("Digite uma quantidade de elementos que esteja dentro dos limites da matriz\n");
 		else check = 1;
 	}
 }
@@ -120,8 +120,8 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 				printf("Digite a linha em que deseja adicionar o número %d\n", p[i].val);
 				scanf("%d", &p[i].y);
 				y = clear();
-				if(!y)
-				else if(p[i].y <= 0 || p[i].y] > lin)printf("Digite um numero valido");
+				if(!y){
+				}else if(p[i].y <= 0 || p[i].y > lin) printf("Digite um numero valido\n");
 				else check = 1;
 			}
 			y = 0;	check = 0;
@@ -129,8 +129,8 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 				printf("Digite a coluna em que deseja adicionar o número %d\n", p[i].val);
 				scanf("%d", &p[i].x);
 				y = clear();
-				if(!y)
-				else if(p[i].x <= 0 || p[i].x] > lin)printf("Digite um numero valido");
+				if(!y){
+				}else if(p[i].x <= 0 || p[i].x > lin)printf("Digite um numero valido\n");
 				else check = 1;
 			}
 			check_all = 1;
