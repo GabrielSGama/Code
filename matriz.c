@@ -4,7 +4,7 @@
 struct matriz{
 	int x;
 	int y;
-	int val;
+	float val;
 };
 
 
@@ -75,15 +75,10 @@ void get_limits(int *col, int *lin, int *flag){
 
 
 
-void add_n_numbers(int col, int lin, int *add, int flag){
+void add_n_numbers(int col, int lin, int *add){
 	int y;
 	int check;
 
-	if(!flag){
-		//clear_scren();
-		printf("Crie uma matriz primeiro\n");
-		return;
-	}
 	clear_scren();
 	check = 0;
 	while(!check){
@@ -97,6 +92,9 @@ void add_n_numbers(int col, int lin, int *add, int flag){
 	}
 }
 
+void chande_numbers(int col, int lin, int quant, struct matriz *p){
+	
+}
 
 void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 	int i;
@@ -112,12 +110,12 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 			printf("Numeros restantes a serem adicionados: %d\n", add - i);
 			while(!y){
 				printf("Digite o número que deseja adicionar:\n");
-				scanf("%d", &p[i].val);
+				scanf("%f", &p[i].val);
 				y = clear();
 			}
 			y = 0;	check = 0;
 			while(!check){
-				printf("Digite a linha em que deseja adicionar o número %d\n", p[i].val);
+				printf("Digite a linha em que deseja adicionar o número %f\n", p[i].val);
 				scanf("%d", &p[i].y);
 				y = clear();
 				if(!y){
@@ -126,7 +124,7 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 			}
 			y = 0;	check = 0;
 			while(!check){
-				printf("Digite a coluna em que deseja adicionar o número %d\n", p[i].val);
+				printf("Digite a coluna em que deseja adicionar o número %f\n", p[i].val);
 				scanf("%d", &p[i].x);
 				y = clear();
 				if(!y){
@@ -147,7 +145,15 @@ void get_numbers(int col, int lin, int add, struct matriz *p, int *n){
 }
 
 void show_info(int col, int lin, int n, struct matriz *p){
-	
+	int i;
+
+
+	printf("Informações da matriz:\n");
+	printf("Numero de linhas: %d	Numero de colunas: %d",lin, col);
+	printf("Numero de elementos: %d", n);
+	for(i = 0; i<n; i++){
+		printf("Numero: %f	linha: %d	coluna: %d", p[i].val, p[i].y, p[i].x);
+	}
 }
 
 
@@ -193,15 +199,15 @@ int main(int argc, char const *argv[]){
 			clear_scren();
 			}else{printf("Já exite uma matriz\n");}
 		}else if(x == 'C' || x == 'c'){
-			add_n_numbers(*col, *lin, add, *flag);
 			if(*flag){
+				add_n_numbers(*col, *lin, add);
 				p = (struct matriz *) calloc(*n + *add, sizeof(struct matriz));
 				if(!p){
 					printf("Não foi possivel alocar memoria o suficiente para %d 'struct matriz'\n", *n);
 					return 1;
 				}
 				get_numbers(*col, *lin, *add, p, n);
-			}
+			}else printf("Crie uma matriz primeiro");
 		}else if(x == 'D' || x == 'd'){
 			if(*flag){
 				clear_scren();
