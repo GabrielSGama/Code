@@ -82,7 +82,7 @@ void get_lin(int *linha, int lin){
 		scanf("%d", linha);
 		y = clear();
 		if(!y){
-		}else if(*linha > lin || *linha < 0)printf("Digite um numero valido\n\n");
+		}else if(*linha >= lin || *linha < 0)printf("Digite um numero valido\n\n");
 		else check = 1;
 	}	
 }
@@ -94,7 +94,7 @@ void get_col(int *coluna, int col){
 		scanf("%d", coluna);
 		y = clear();
 		if(!y){
-		}else if(*coluna > col || *coluna < 0)printf("Digite um numero valido\n\n");
+		}else if(*coluna >= col || *coluna < 0)printf("Digite um numero valido\n\n");
 		else check = 1;
 	}
 }
@@ -153,7 +153,7 @@ int find(int *linha ,int *coluna,int col, int lin, int n, struct matriz *p)
 
 	
 	get_lin(linha,lin);
-	get_col(coluna, col);
+	get_col(coluna,col);
 	for(i = 0; i < n; i++){
 		if(p[i].x == *coluna && p[i].y == *linha){
 			return i;
