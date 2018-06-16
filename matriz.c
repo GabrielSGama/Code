@@ -35,10 +35,10 @@ char choose()
 		printf("Escolha a opção que deseja realizar:\n");
 		printf("Fechar programa                                     -> A\n");
 		printf("Criar a matriz m por n                              -> B\n");
-		printf("Adicionar elementos à matriz                        -> C\n");
+		printf("Adicionar elementos na matriz                       -> C\n");
 		printf("Modificar elementos na matriz                       -> D\n");
 		printf("Mostrar informacoes indiviuais da matriz:           -> E\n");
-		printf("Mostrar informações gerais da matriz                -> F\n");
+		printf("Mostrar informacoes gerais da matriz                -> F\n");
 		printf("Consultar soma dos valores de cada linha da matriz  -> G\n");
 		printf("Consultar soma dos valores de cada coluna da matriz -> H\n");
 		printf("Excluir a matriz m por n                            -> I\n");
@@ -55,7 +55,7 @@ void get_limits(int *col, int *lin, int *flag)
 	int check = 0;
 
 	while(!check){
-		printf("Digite o número de colunas que deseja ter em sua matriz:\n");
+		printf("Digite o numero de colunas que deseja ter em sua matriz:\n");
 		scanf("%d", col);
 		y = clear();
 		if(!y){
@@ -64,7 +64,7 @@ void get_limits(int *col, int *lin, int *flag)
 	}
 	check = 0;
 	while(!check){
-		printf("Digite o número de linhas que deseja ter em sua matriz:\n");
+		printf("Digite o numero de linhas que deseja ter em sua matriz:\n");
 		scanf("%d", lin);
 		y = clear();
 		if(!y){
@@ -73,35 +73,49 @@ void get_limits(int *col, int *lin, int *flag)
 	}
 	*flag = 1;
 }
-
-int val_lin(int lin, struct matriz *p, int n)
-{
-	int check = 0;
+void get_lin(int *linha, int lin){
 	int y;
-	int linha;
+	int check = 0;
+
+	while(!check){
+		printf("Digite a linha que deseja selecionar:\n");
+		scanf("%d", linha);
+		y = clear();
+		if(!y){
+		}else if(*linha > lin || *linha < 0)printf("Digite um numero valido\n\n");
+		else check = 1;
+	}	
+}
+void get_col(int *coluna, int col){
+	int y;
+	int check = 0;
+	while(!check){
+		printf("Digite a coluna que deseja selecionar:\n");
+		scanf("%d", coluna);
+		y = clear();
+		if(!y){
+		}else if(*coluna > col || *coluna < 0)printf("Digite um numero valido\n\n");
+		else check = 1;
+	}
+}
+
+
+int val_lin(int *linha, int lin, struct matriz *p, int n)
+{
 	int i;
 	float sum = 0;
 
-	while(!check){
-		printf("Digite a linha que deseja ver a soma de seus elementos\n");
-		scanf("%d", &linha);
-		y = clear();
-		if(!y){
-		}else if(linha < 0 || linha > lin) printf("Digite um numero valido\n\n");
-		else check = 1;
-	}
+	get_lin(linha, lin);
 	for(i = 0; i<n; i++){
-		if(p[i].y == linha){
+		if(p[i].y == *linha){
 			sum += p[i].val;
 		}
 	}
-	printf("Valor da soma dos elementos da linha %d: %f\n\n", linha, sum);
+	printf("Valor da soma dos elementos da linha %d: %f\n\n", *linha, sum);
 }
 
 int val_col(int col,int *coluna, struct matriz *p, int n)
 {
-	int check = 0;
-	int y;
 	int i;
 	float sum = 0;
 
@@ -111,7 +125,7 @@ int val_col(int col,int *coluna, struct matriz *p, int n)
 			sum += p[i].val;
 		}
 	}
-	printf("Valor da soma dos elementos da coluna %d: %f\n\n", coluna, sum);
+	printf("Valor da soma dos elementos da coluna %d: %f\n\n", *coluna, sum);
 }
 
 void add_n_numbers(int col, int lin,int *add, int n)
@@ -127,31 +141,6 @@ void add_n_numbers(int col, int lin,int *add, int n)
 		y = clear();
 		if(!y){
 		}else if(*add <= 0) printf("Digite um numero valido de elementos\n\n");
-		else check = 1;
-	}
-}
-void get_lin(int *linha, int lin){
-	int y;
-	int check = 0;
-
-	while(!check){
-		printf("Digite a linha que deseja selecionar:\n");
-		scanf("%d", linha);
-		y = clear();
-		if(!y){
-		}else if(*linha > lin || *linha < 0)printf("Digite um numero válido\n\n");
-		else check = 1;
-	}	
-}
-void get_col(int *coluna, int col){
-	int y;
-	int check = 0;
-	while(!check){
-		printf("Digite a coluna que deseja selecionar:\n");
-		scanf("%d", coluna);
-		y = clear();
-		if(!y){
-		}else if(*coluna > col || *coluna < 0)printf("Digite um numero válido\n\n");
 		else check = 1;
 	}
 }
@@ -185,7 +174,7 @@ void change_numbers(int col, int lin, struct matriz *p, int n, int i)
 		printf("Numero antigo: %f\n", p[i].val);
 		check = 0;
 		while(!check){
-			printf("Digite o numero que ira substituir o antigo\n:");
+			printf("Digite o numero que ira substituir o antigo:\n");
 			scanf("%f", &p[i].val);
 			y = clear();
 			if(y) return;
@@ -206,21 +195,23 @@ void get_numbers(int *coluna, int *linha,int col, int lin, int add, struct matri
 
 	for(i = 0; i<add; i++){
 		check_all = 0;
+		
+		printf("Numeros restantes a serem adicionados: %d\n", add - i);
+		y = 0;
+		while(!y){
+			printf("Digite o numero que deseja adicionar:\n");
+			scanf("%f", &p[i+*n].val);
+			y = clear();
+		}
 		while(!check_all){
-			printf("Numeros restantes a serem adicionados: %d\n", add - i);
-			y = 0;
-			while(!y){
-				printf("Digite o número que deseja adicionar:\n");
-				scanf("%f", &p[i+*n].val);
-				y = clear();
-			}
 			get_lin(linha,lin);
 			get_col(coluna, col);
 			p[i+*n].x = *coluna;	p[i+*n].y = *linha;
 			check_all = 1;
 			for(k = 0; k < *n + i; k++){
 				if(p[i+*n].x == p[k].x && p[i+*n].y == p[k].y && (i+*n)!=k){
-					check_all = 1;
+					check_all = 0;
+					printf("Insira o numero em uma posicao nao utilizada\n\n");
 					break;
 				}
 			}
@@ -235,7 +226,7 @@ void show_info_all(int col, int lin, int n, struct matriz *p)
 	int i;
 	int k;
 
-	printf("Informações da matriz:\n");
+	printf("Informacoes da matriz:\n");
 	printf("Numero de colunas: %d    Numero de linhas: %d\n",col,lin);
 	printf("Numero de elementos adicionados: %d\n", n);
 	for(k = 0; k <= lin; k++){
@@ -264,7 +255,7 @@ int main(int argc, char const *argv[])
 
 	nostack = (int*)malloc(10*sizeof(int));
 	if(!nostack){
-		printf("Não foi possível alocar memória sufuciente para dez inteiros\n");
+		printf("Nao foi possivel alocar memoria sufuciente para dez inteiros\n");
 		printf("Feche outros programas e retorne mais tarde\n\n");
 		return 1;
 	}
@@ -321,13 +312,14 @@ int main(int argc, char const *argv[])
 			}else printf("Crie uma matriz primeiro\n\n");
 		}else if(x == 'D' || x == 'd'){
 			clear_scren();
-			if(*flag){
+			if(*flag && *n){
 				do{
 					add_n_numbers(*col, *lin, add, *n);
 					clear_scren();
 					if(*add <= *n)
 						break;
 					printf("Nao eh possivel modificar mais elementos do que existem inseridos na matriz\nCaso queira adicionar um elemento acesse a opcao 'C'\n\n");
+					
 				}while(1);
 				for(k = 0; k < *add; k++){
 					printf("Numeros restantes a serem modificados: %d\n", *add - k);
@@ -335,7 +327,7 @@ int main(int argc, char const *argv[])
 					change_numbers(*col, *lin, p, *n, i);
 					clear_scren();
 				}
-			}else printf("Crie uma matriz primeiro\n\n");
+			}else printf("Crie uma matriz primeiro e adicione elementos a mesma\n\n");
 		}else if(x == 'E' || x == 'e'){
 			clear_scren();
 			if(*flag){
@@ -355,7 +347,7 @@ int main(int argc, char const *argv[])
 		}else if(x == 'G' || x == 'g'){
 			clear_scren();
 			if(*flag){
-			val_lin(*lin, p, *n);
+			val_lin(linha,*lin, p, *n);
 			}else printf("Crie uma matriz primeiro\n\n");
 		}else if(x == 'H' || x == 'h'){
 			clear_scren();
